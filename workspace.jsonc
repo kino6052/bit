@@ -7,7 +7,7 @@
     "defaultDirectory": "components"
   },
   "teambit.dependencies/dependency-resolver": {
-    "packageManager": "teambit.dependencies/yarn",
+    "packageManager": "teambit.dependencies/pnpm",
     "policy": {
       "dependencies": {
         "@babel/core": "7.11.6",
@@ -216,6 +216,7 @@
         },
         "eslint-import-resolver-node": "0.3.4",
         "eventemitter2": "6.4.4",
+        "events": "3.3.0",
         "express": "4.17.1",
         "express-graphql": "0.12.0",
         "express-history-api-fallback": "2.2.1",
