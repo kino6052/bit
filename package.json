@@ -308,5 +308,8 @@
     "type-coverage": "2.15.1",
     "typescript": "4.4.2",
     "verdaccio": "4.11.0"
+  },
+  "pnpm": {
+    "neverBuiltDependencies": ["core-js"]
   }
 }
