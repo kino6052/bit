@@ -206,7 +206,7 @@ jobs:
       - run: 'echo "-----END RSA PRIVATE KEY-----" >> ~/.ssh/id_rsa'
       - run: 'echo ${testerBitsrcSSHPublicKey} >> id_rsa.pub'
       - save_cache:
-          key: bitsrc-ssh-key3
+          key: bitsrc-ssh-key4
           paths:
             - ~/.ssh/id_rsa
             - ~/.ssh/id_rsa.pub
@@ -228,7 +228,7 @@ jobs:
       # -
       # run: 'echo "//node-stg.bit.dev/:_authToken=$registryStgToken" >> ~/.npmrc'
       - save_cache:
-          key: bitsrc-registry9
+          key: bitsrc-registry10
           # key: bitsrc-registry-stg-v2
           paths:
             - ~/.npmrc
@@ -282,7 +282,7 @@ jobs:
       - restore_cache:
           keys:
             # - 'pkg-cache-v3-{{ checksum "/home/circleci/pkg-target.txt" }}'
-            - pkg-cache-v3
+            - pkg-cache-v4
       - run:
           name: 'set pkg path'
           command: "echo 'export PKG_CACHE_PATH=/home/circleci/pkg-cache' >> $BASH_ENV"
@@ -295,7 +295,7 @@ jobs:
       #     paths:
       #       - ~/pkg-cache
       - save_cache:
-          key: pkg-cache-v3
+          key: pkg-cache-v4
           paths:
             - /home/circleci/pkg-cache
       # -
@@ -474,7 +474,7 @@ jobs:
           command: 'echo $CIRCLE_SHA1 > .circle-sha'
       - restore_cache:
           keys:
-            - 'repo-{{ checksum ".circle-sha" }}'
+            - 'repo-{{ checksum ".circle-sha" }}-v1'
       - attach_workspace:
           at: ./
       - run:
@@ -511,7 +511,7 @@ jobs:
       - attach_workspace:
           at: ./
       - restore_cache:
-          key: bitsrc-registry9
+          key: bitsrc-registry10
       - run:
           name: 'install husky globally'
           command: 'sudo npm i -g husky'
@@ -519,14 +519,14 @@ jobs:
       - install_bvm
       - run: npm view @teambit/bit version > ./version.txt
       - restore_cache:
-          key: v2-linux-bvm-folder-{{ checksum "version.txt" }}
+          key: v3-linux-bvm-folder-{{ checksum "version.txt" }}
       - run: bvm config set DEFAULT_LINK bbit
       - run: bvm install 0.0.428
       # - run: bvm upgrade
       - run: bvm link --verbose
       - run: bbit
       - save_cache:
-          key: v2-linux-bvm-folder-{{ checksum "version.txt" }}
+          key: v3-linux-bvm-folder-{{ checksum "version.txt" }}
           paths:
             - /home/circleci/.bvm
       - run: cd bit && bbit install
@@ -571,9 +571,9 @@ jobs:
       - bit_global_for_npm
       - bit_config
       - restore_cache:
-          key: bitsrc-ssh-key3
+          key: bitsrc-ssh-key4
       - restore_cache:
-          key: bitsrc-registry9
+          key: bitsrc-registry10
       # - update_ssh_agent
       - run:
           name: 'bit status'
@@ -601,13 +601,13 @@ jobs:
       - install_bvm
       - run: npm view @teambit/bit version > ./version.txt
       - restore_cache:
-          key: v2-linux-bvm-folder-{{ checksum "version.txt" }}
+          key: v3-linux-bvm-folder-{{ checksum "version.txt" }}
       - bit_config:
           env: "hub"
       - restore_cache:
-          key: bitsrc-ssh-key3
+          key: bitsrc-ssh-key4
       - restore_cache:
-          key: bitsrc-registry9
+          key: bitsrc-registry10
       - update_ssh_agent
       - set_git_credentials
       - run:
@@ -851,9 +851,9 @@ jobs:
       - bit_config:
           env: "hub"
       - restore_cache:
-          key: bitsrc-ssh-key3
+          key: bitsrc-ssh-key4
       - restore_cache:
-          key: bitsrc-registry9
+          key: bitsrc-registry10
       - update_ssh_agent
       - set_git_credentials
       - run: bit config set user.token ${BIT_DEV_PROD_TOKEN}
@@ -901,9 +901,9 @@ jobs:
           name: 'install expect lib (needed to add user for CI NPM registry, see npm-ci-registry.js)'
           command: 'sudo apt-get install expect'
       - restore_cache:
-          key: bitsrc-ssh-key3
+          key: bitsrc-ssh-key4
       - restore_cache:
-          key: bitsrc-registry9
+          key: bitsrc-registry10
       # add the id_rsa to ssh_agent to make sure we authenticate with the correct user
       # - run: 'chmod 400 ~/.ssh/id_rsa'
       # - run: 'ssh-add ~/.ssh/id_rsa'
@@ -976,9 +976,9 @@ jobs:
           name: 'save SHA to a file'
           command: 'echo $CIRCLE_SHA1 > .circle-sha'
       - restore_cache:
-          key: bitsrc-ssh-key3
+          key: bitsrc-ssh-key4
       - restore_cache:
-          key: bitsrc-registry9
+          key: bitsrc-registry10
           # key: bitsrc-registry-stg-v2
       - # add the id_rsa to ssh_agent to make sure we authenticate with the correct user
         run: 'chmod 400 ~/.ssh/id_rsa'
@@ -1022,7 +1022,7 @@ jobs:
       - run: 'echo "-----END RSA PRIVATE KEY-----" >> id_rsa'
       - run: 'echo ${testerBitsrcSSHPublicKey} >> id_rsa.pub'
       - save_cache:
-          key: windows_bitsrc-ssh-key-v1
+          key: windows_bitsrc-ssh-key-v2
           paths:
             - id_rsa
             - id_rsa.pub
@@ -1055,7 +1055,7 @@ jobs:
       # -
       #   run: Add-Content -Path C:\Users\circleci\.npmrc  -Value '//node.bit.dev/:_authToken=$Env:registryStgToken'
       - save_cache:
-          key: windows_bitsrc-registry-v5
+          key: windows_bitsrc-registry-v6
           # key: windows_bitsrc-registry-stg-v2
           paths:
             - C:\Users\circleci\.npmrc
@@ -1070,7 +1070,7 @@ jobs:
       - attach_workspace:
           at: .
       - restore_cache:
-          key: windows_bitsrc-registry-v5
+          key: windows_bitsrc-registry-v6
           # key: windows_bitsrc-registry-stg-v2
       # -
       #   run: 'npm config list'
@@ -1105,7 +1105,7 @@ jobs:
       - run: npm view @teambit/bit version | Out-File -FilePath .\version.txt
       - run: Get-Content -Path .\version.txt
       - restore_cache:
-          key: v1-bvm-folder-{{ checksum "version.txt" }}
+          key: v2-bvm-folder-{{ checksum "version.txt" }}
       - run: 'npm i -g @teambit/bvm'
       - run: 'bvm upgrade'
       - run: 'setx path "%path%;C:\Users\circleci\AppData\Local\.bvm"'
@@ -1113,7 +1113,7 @@ jobs:
       - run: bit -v | Out-File -FilePath .\version.txt
       - run: Get-Content -Path .\version.txt
       - save_cache:
-          key: v1-bvm-folder-{{ checksum "version.txt" }}
+          key: v2-bvm-folder-{{ checksum "version.txt" }}
           paths:
             - C:\Users\circleci\AppData\Local\.bvm
       - persist_to_workspace:
@@ -1138,7 +1138,7 @@ jobs:
       # - restore_cache:
       #     key: bvm-folder-v1
       - restore_cache:
-          key: v1-bvm-folder-{{ checksum "version.txt" }}
+          key: v2-bvm-folder-{{ checksum "version.txt" }}
       # - run: bit -v
       - run: 'setx path "%path%;C:\Users\circleci\AppData\Local\.bvm"'
       - run: bit -v
@@ -1150,9 +1150,9 @@ jobs:
           name: 'save SHA to a file'
           command: 'echo $CIRCLE_SHA1 > .circle-sha'
       - restore_cache:
-          key: windows_bitsrc-ssh-key-v1
+          key: windows_bitsrc-ssh-key-v2
       - restore_cache:
-          key: windows_bitsrc-registry-v1
+          key: windows_bitsrc-registry-v2
           # key: windows_bitsrc-registry-stg-v2
       # -
       #   restore_cache:
@@ -1192,7 +1192,7 @@ jobs:
       # - restore_cache:
       #     key: bvm-folder-v1
       - restore_cache:
-          key: v1-bvm-folder-{{ checksum "version.txt" }}
+          key: v2-bvm-folder-{{ checksum "version.txt" }}
       # - run: bit -v
       - run: 'setx path "%path%;C:\Users\circleci\AppData\Local\.bvm"'
       - run: bit -v
@@ -1204,9 +1204,9 @@ jobs:
           name: 'save SHA to a file'
           command: 'echo $CIRCLE_SHA1 > .circle-sha'
       - restore_cache:
-          key: windows_bitsrc-ssh-key-v1
+          key: windows_bitsrc-ssh-key-v2
       - restore_cache:
-          key: windows_bitsrc-registry-v1
+          key: windows_bitsrc-registry-v2
           # key: windows_bitsrc-registry-stg-v2
       # -
       #   restore_cache:
@@ -1265,9 +1265,9 @@ jobs:
           name: 'save SHA to a file'
           command: 'echo $CIRCLE_SHA1 > .circle-sha'
       - restore_cache:
-          key: windows_bitsrc-ssh-key-v1
+          key: windows_bitsrc-ssh-key-v2
       - restore_cache:
-          key: windows_bitsrc-registry-v1
+          key: windows_bitsrc-registry-v2
           # key: windows_bitsrc-registry-stg-v2
       # -
       #   restore_cache:
